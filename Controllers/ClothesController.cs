@@ -10,47 +10,58 @@ namespace ClothingAPI.Controllers
     public class ClothingController : ControllerBase
     {
 
-        Clothes clothes;
-
-        public ClothingController()
-        {
-            clothes = new Clothes();
-        }
+        Clothes clothes = new Clothes();
 
         [HttpGet("getAllClothing")]
-        public IActionResult getAllClothe()
+        public IActionResult GetAllClothing()
         {
-
-            return Ok(clothes.getAllClothing());
+            return Ok(clothes.GetAllClothing());
         }
 
+        [HttpGet("getClothing/{id}")]
+        public IActionResult GetClothing(int id)
+        {
+            Clothing clothing = clothes.GetClothing(id);
 
-        [HttpGet("getClothing")]
-        public IActionResult GetClothing([FromBody]int id) {
-            
-            Clothing clothe = clothes.getClothe(id);
-
-            if(clothe == null)
+            if (clothing == null)
             {
                 return NotFound();
             }
 
-            return Ok(clothe);
+            return Ok(clothing);
         }
 
         [HttpPost("newClothing")]
-        public IActionResult newClothe([FromBody]Clothing clothe)
+        public IActionResult NewClothing([FromBody] Clothing clothing)
         {
-
-
-            if (!clothes.newClothe(clothe))
+            if (!clothes.AddClothing(clothing))
             {
                 return BadRequest();
             }
 
-            return Ok(clothe);
+            return Ok(clothing);
         }
 
+        [HttpPut("updateClothing/{id}")]
+        public IActionResult UpdateClothing(int id, [FromBody] Clothing clothing)
+        {
+            if (!clothes.UpdateClothing(id, clothing))
+            {
+                return NotFound();
+            }
 
+            return Ok(clothing);
+        }
+
+        [HttpDelete("removeClothing/{id}")]
+        public IActionResult RemoveClothing(int id)
+        {
+            if (!clothes.RemoveClothing(id))
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
     }
 }
