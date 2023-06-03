@@ -5,16 +5,21 @@ namespace ClothingAPI.Utilities
 {
     public class Clothes
     {
-        private List<Clothing> _clothes = new List<Clothing>()
+        private static List<Clothing> _clothes { get; set; }
+
+        public Clothes() {
+            if (_clothes == null)
             {
-                new Clothing()
-                {
-                    Id = 1,
-                    Type = "T-Shirt",
-                    Size = "M",
-                    Description = "Black T-Shirt oversize",
-                    Price = 50000,
-                },
+                _clothes = new List<Clothing>() {
+            new Clothing()
+            {
+                Id = 1,
+                Type = "T-Shirt",
+                Size = "M",
+                Description = "Black T-Shirt oversize",
+                Price = 50000,
+            }
+                ,
                 new Clothing()
                 {
                     Id = 2,
@@ -48,16 +53,7 @@ namespace ClothingAPI.Utilities
                     Price = 250000,
                 }
             };
-
-        public Clothes()
-        {
-
-        }
-
-        public List<Clothing> ClothesList
-        {
-            get { return _clothes; }
-            set { _clothes = value; }
+            }
         }
 
         public bool AddClothing(Clothing clothing)
@@ -71,7 +67,7 @@ namespace ClothingAPI.Utilities
             return _clothes.Find(clothing => clothing.Id == id);
         }
 
-        public bool UpdateClothing(int id, Clothing clothing)
+        public bool UpdateClothing(int id, ClothingUpdate clothing)
         {
             var storedClothing = GetClothing(id);
             if (storedClothing == null)

@@ -3,14 +3,21 @@ using ClothingAPI.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace ClothingAPI.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class ClothingController : ControllerBase
     {
+        Clothes clothes;
 
-        Clothes clothes = new Clothes();
+        public ClothingController() {
+
+            this.clothes = new Clothes();
+
+        }
 
         [HttpGet("getAllClothing")]
         public IActionResult GetAllClothing()
@@ -43,7 +50,7 @@ namespace ClothingAPI.Controllers
         }
 
         [HttpPut("updateClothing/{id}")]
-        public IActionResult UpdateClothing(int id, [FromBody] Clothing clothing)
+        public IActionResult UpdateClothing(int id, [FromBody] ClothingUpdate clothing)
         {
             if (!clothes.UpdateClothing(id, clothing))
             {
